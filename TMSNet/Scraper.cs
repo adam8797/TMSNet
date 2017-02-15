@@ -9,14 +9,21 @@ namespace TMSNet
 {
     public class Scraper
     {
-        public Uri BaseUri = new Uri("https://duapp2.drexel.edu");
+        public Uri BaseUri;
+        private readonly WebClient _client;
 
         public Scraper()
         {
+            BaseUri = new Uri("https://duapp2.drexel.edu");
             _client = new WebClient();
         }
 
-        private readonly WebClient _client;
+        public Scraper(string baseUri)
+        {
+            BaseUri = new Uri(baseUri);
+            _client = new WebClient();
+        }
+
 
         #region GetTerms
 

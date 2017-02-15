@@ -5,5 +5,7 @@
         void Add(ClassSection cs);
 
         void CommitChanges();
+
+        void Close();
     }
 }
