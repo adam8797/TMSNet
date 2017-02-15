@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMSNet", "TMSNet\TMSNet.csproj", "{27011272-E4D2-4184-B775-65249DD677D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMSNet.Importer", "TMSNet.Importer\TMSNet.Importer.csproj", "{7FAF737B-17CA-4301-8D63-58AB6E7B35E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27011272-E4D2-4184-B775-65249DD677D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27011272-E4D2-4184-B775-65249DD677D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27011272-E4D2-4184-B775-65249DD677D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27011272-E4D2-4184-B775-65249DD677D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FAF737B-17CA-4301-8D63-58AB6E7B35E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FAF737B-17CA-4301-8D63-58AB6E7B35E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FAF737B-17CA-4301-8D63-58AB6E7B35E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FAF737B-17CA-4301-8D63-58AB6E7B35E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
