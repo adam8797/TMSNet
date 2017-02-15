@@ -61,7 +61,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DrexelWebTmsScraper\TMSNet.csproj">
+    <ProjectReference Include="..\TMSNet\TMSNet.csproj">
       <Project>{27011272-e4d2-4184-b775-65249dd677d5}</Project>
       <Name>TMSNet</Name>
     </ProjectReference>
