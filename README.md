@@ -9,6 +9,7 @@ TMSNet contains the core scraping functionality. It loads and parses the pages, 
 
 A basic TMSNet example, that prints out every class, for every term.
 
+```C#
     var scraper = new TMSNet.Scraper();
 
     foreach (var term in scraper.GetTerms())
@@ -27,9 +28,11 @@ A basic TMSNet example, that prints out every class, for every term.
 	        }
 	    }
     }
+```
 
 ### Public Methods
 
+```C#
     public class Scraper
     {
         public IEnumerable<Page> GetTerms() { ... }
@@ -44,6 +47,7 @@ A basic TMSNet example, that prints out every class, for every term.
         public IEnumerable<ClassDefinition> GetClasses(Page subject) { ... }
         public async Task<IEnumerable<ClassDefinition>> GetClassesAsync(Page subject) { ... }
     }
+```
 
 ## TMSNet.Importer
 
