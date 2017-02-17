@@ -1,6 +1,14 @@
 # TMS.Net
 A .NET Library to Scrape the Drexel Term Master Schedule. The process is not quick, as it loads every page that the TMS can produce once. This usually takes about five minutes per term.
 
+## NuGet
+
+TMS.Net is available on [NuGet](https://www.nuget.org/packages/TMS.Net/1.0.0)!
+
+```
+PM> Install-Package TMS.Net
+```
+
 This project contains two segments, `TMSNet` and `TMSNet.Importer`
 
 ## TMSNet
