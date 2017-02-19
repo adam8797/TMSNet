@@ -60,13 +60,14 @@ namespace TMSNet.Importer
                 foreach (var subject in scraper.GetSubjects(school))
                 {
                     WriteWholeLine("    " + subject.Name);
-                    foreach (var classDefinition in scraper.GetClasses(subject))
+                    foreach (var crn in scraper.GetCrns(subject))
                     {
-                        WriteWholeLine("      " + classDefinition);
-
+                        WriteWholeLine("      " + crn.Name);
                         try
                         {
-                            var cs = new ClassSection(classDefinition)
+                            var cd = scraper.GetDetailedClass(crn);
+
+                            var cs = new ClassSection(cd)
                             {
                                 School = school.Name,
                                 Term = term.Name,

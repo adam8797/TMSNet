@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -163,11 +164,11 @@ namespace TMSNet
 
         #region GetClasses
 
-        public IEnumerable<ClassDefinition> GetClassesFromHtml(string html)
+        private IEnumerable<ClassDefinition> GetClassesFromHtml(string html)
         {
             var sel = (CQ) html;
             var rows = sel[".tableHeader"].Siblings(".odd, .even");
-            return rows.Select(x => new ClassDefinition(x));
+            return rows.Select(ClassDefinition.FromTr);
         }
 
         /// <summary>
@@ -192,6 +193,69 @@ namespace TMSNet
             var html = await _client.DownloadStringTaskAsync(new Uri(BaseUri, subject.Url));
 
             return GetClassesFromHtml(html);
+        }
+
+        #endregion
+
+        #region GetGrns
+
+        private IEnumerable<Page> GetCrnsFromHtml(string html)
+        {
+            var sel = (CQ)html;
+            var rows = sel[".tableHeader"].Siblings(".odd, .even");
+            return rows.Select(x =>
+            {
+                var crn = x.ChildElements.ElementAt(5).FirstElementChild.FirstElementChild;
+
+                return new Page()
+                {
+                    Name = x.InnerText,
+                    Url = x.GetAttribute("href")
+                };
+            });
+        }
+
+        public IEnumerable<Page> GetCrns(Page subject)
+        {
+            var html = _client.DownloadString(new Uri(BaseUri, subject.Url));
+
+            return GetCrnsFromHtml(html);
+
+        }
+
+        public async Task<IEnumerable<Page>> GetCrnsAsync(Page subject)
+        {
+            var html = await _client.DownloadStringTaskAsync(new Uri(BaseUri, subject.Url));
+
+            return GetCrnsFromHtml(html);
+        }
+
+        #endregion
+
+        #region GetDetailedClasses
+
+        private ClassDefinition GetDetailedClassFromHtml(string html)
+        {
+            var sel = (CQ)html;
+            var table = sel["td.tableHeader"].First().Parent("table");
+
+            var outter = table.Selection.First().OuterHTML;
+
+            return new ClassDefinition();
+        }
+
+        public ClassDefinition GetDetailedClass(Page crn)
+        {
+            var html = _client.DownloadString(new Uri(BaseUri, crn.Url));
+
+            return GetDetailedClassFromHtml(html);
+        }
+
+        public async Task<ClassDefinition> GetDetailedClassAsync(Page crn)
+        {
+            var html = await _client.DownloadStringTaskAsync(new Uri(BaseUri, crn.Url));
+
+            return GetDetailedClassFromHtml(html);
         }
 
         #endregion
