@@ -14,7 +14,7 @@ namespace TMSNet.Importer.Dest
         {
             using (var writer = new StreamWriter(Path))
             {
-                writer.WriteLine("Term, School, Subject, SubjectCode, CourseNumber, InstructionType, InstructionMethod, Section, Crn, CourseTitle, Instructor, Days, StartTime, EndTime");
+                writer.WriteLine("Term,School,Subject,SubjectCode,CourseNumber,InstructionType,InstructionMethod,Section,Crn,CourseTitle,Instructor,Campus,Enroll,MaxEnrollMaxCredits,MinCredits,StartDate,EndDate,Days,StartTime,EndTime");
 
                 foreach (var classSection in Sections)
                 {
@@ -29,6 +29,13 @@ namespace TMSNet.Importer.Dest
                     writer.Write(QuoteIfNeeded(classSection.Crn) + ",");
                     writer.Write(QuoteIfNeeded(classSection.CourseTitle) + ",");
                     writer.Write(QuoteIfNeeded(classSection.Instructor) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.Campus) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.Enroll.ToString()) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.MaxEnroll.ToString()) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.MaxCredits.ToString()) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.MinCredits.ToString()) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.StartDate.ToString("d")) + ",");
+                    writer.Write(QuoteIfNeeded(classSection.EndDate.ToString("d")) + ",");
                     writer.Write(GetDays(classSection.Days) + ",");
                     writer.Write(DateTime.Today.Add(classSection.StartTime).ToString("hh:mm tt") + ",");
                     writer.WriteLine(DateTime.Today.Add(classSection.EndTime).ToString("hh:mm tt"));

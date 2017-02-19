@@ -2,19 +2,11 @@
 {
     public class ClassSection : ClassDefinition
     {
+        public ClassSection() { }
+
         public ClassSection(ClassDefinition def)
         {
-            SubjectCode = def.SubjectCode;
-            CourseNumber = def.CourseNumber;
-            InstructionType = def.InstructionType;
-            InstructionMethod = def.InstructionMethod;
-            Section = def.Section;
-            Crn = def.Crn;
-            CourseTitle = def.CourseTitle;
-            Instructor = def.Instructor;
-            Days = def.Days;
-            StartTime = def.StartTime;
-            EndTime = def.EndTime;
+            Utils.CopyCast(def, this);
         }
 
         public string Term { get; set; }
