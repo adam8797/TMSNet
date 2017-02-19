@@ -5,7 +5,7 @@ The process takes about 5 mins per term in quick mode, and up to 30 mins in slow
 
 ## NuGet
 
-TMS.Net is available on [NuGet](https://www.nuget.org/packages/TMS.Net/1.0.0)!
+TMS.Net is available on [NuGet](https://www.nuget.org/packages/TMS.Net)!
 
 ```
 PM> Install-Package TMS.Net
