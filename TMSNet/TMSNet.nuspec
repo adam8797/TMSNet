@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>TMS.Net</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>TMS.Net</title>
     <authors>Adam Schiavone</authors>
     <owners>Adam Schiavone</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/adam8797/TMSNet</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>A library to scrape information from the Drexel University Term Master Schedule</description>
-    <releaseNotes>Initial Release.</releaseNotes>
+    <releaseNotes>Added quick/slow modes.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>TMS Term Master Schedule Drexel</tags>
   </metadata>
