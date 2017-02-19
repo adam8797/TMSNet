@@ -62,7 +62,7 @@ foreach (var term in scraper.GetTerms())
                 var cd = scraper.GetDetailedClass(crn);
                 Console.WriteLine("{0} Enroll: {1}; MaxEnroll: {2}; Credits: {3}", 
                     cd.CourseTitle, cd.Enroll, cd.MaxEnroll, cd.Credits);
-            }
+            } 
         }
     }
 }
