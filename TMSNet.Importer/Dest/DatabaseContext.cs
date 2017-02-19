@@ -22,6 +22,9 @@ namespace TMSNet.Importer.Dest
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClassSection>().HasKey(x => x.Crn);
+
+            modelBuilder.Entity<ClassSection>().Property(x => x.StartDate).HasColumnType("datetime2");
+            modelBuilder.Entity<ClassSection>().Property(x => x.EndDate).HasColumnType("datetime2");
         }
 
         public void Close()

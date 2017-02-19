@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using TMSNet.Importer.Dest;
 
@@ -52,51 +53,45 @@ namespace TMSNet.Importer
                     throw new Exception("Invalid Option");
             }
 
+            Console.Clear();
 
-            WriteWholeLine(term.Name);
-            foreach (var school in scraper.GetSchools(term))
+            var watch = Stopwatch.StartNew();
+
+            double prog = 0;
+
+            var schools = scraper.GetSchools(term).ToList();
+            double progPerSchool = 1.0 / schools.Count;
+            foreach (var school in schools)
             {
-                WriteWholeLine("  " + school.Name);
-                foreach (var subject in scraper.GetSubjects(school))
+                var subjects = scraper.GetSubjects(school).ToList();
+                double progPerSubject = progPerSchool / subjects.Count;
+                foreach (var subject in subjects)
                 {
-                    WriteWholeLine("    " + subject.Name);
-                    foreach (var crn in scraper.GetCrns(subject))
+                    var crns = scraper.GetCrns(subject).ToList();
+                    double progPerCrn = progPerSubject / crns.Count;
+                    foreach (var crn in crns)
                     {
-                        WriteWholeLine("      " + crn.Name);
-                        try
-                        {
-                            var cd = scraper.GetDetailedClass(crn);
+                        var cd = scraper.GetDetailedClass(crn);
 
-                            var cs = new ClassSection(cd)
-                            {
-                                School = school.Name,
-                                Term = term.Name,
-                                Subject = subject.Name
-                            };
-
-                            dest.Add(cs);
-                        }
-                        catch (Exception e)
+                        var cs = new ClassSection(cd)
                         {
-                            var p = Console.CursorTop;
-                            Console.CursorTop = Console.WindowHeight - 1;
-                            Console.WriteLine(e);
-                            Console.CursorTop = p;
-                        }
-                        Console.CursorTop--;
+                            School = school.Name,
+                            Term = term.Name,
+                            Subject = subject.Name
+                        };
+
+                        dest.Add(cs);
+                        prog += progPerCrn;
+
+                        Console.Write("{0:P2} ({1:F2}s)\r", prog, watch.ElapsedMilliseconds / 1000.0);
                     }
-                    WriteWholeLine("      Saving Changes");
                     dest.CommitChanges();
-                    Console.CursorTop--;
-                    WriteWholeLine("");
-                    Console.CursorTop -= 2;
-
                 }
-                Console.CursorTop--;
             }
-            Console.WriteLine("Closing...");
+            Console.WriteLine("\nClosing...");
             dest.Close();
-            Console.WriteLine("Finished");
+            watch.Stop();
+            Console.WriteLine("Finished ({0}ms)", watch.ElapsedMilliseconds);
         }
 
         static int ChooseOptions(params string[] options)
@@ -121,7 +116,18 @@ namespace TMSNet.Importer
 
         static void WriteWholeLine(string s)
         {
-            Console.WriteLine(s + new string(' ', Console.BufferWidth - s.Length - 1));
+            var len = Console.BufferWidth - s.Length - 1;
+            if (len < 0)
+                Console.WriteLine(Truncate(s, Console.BufferWidth));
+            else
+                Console.WriteLine(s + new string(' ', Console.BufferWidth - s.Length - 1));
+        }
+
+        static string Truncate(string s, int length)
+        {
+            if (s.Length > length)
+                return s.Substring(0, length - 4) + "...";
+            return s;
         }
     }
 }

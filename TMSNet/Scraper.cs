@@ -197,7 +197,7 @@ namespace TMSNet
 
         #endregion
 
-        #region GetGrns
+        #region GetCrns
 
         private IEnumerable<Page> GetCrnsFromHtml(string html)
         {
@@ -209,12 +209,17 @@ namespace TMSNet
 
                 return new Page()
                 {
-                    Name = x.InnerText,
-                    Url = x.GetAttribute("href")
+                    Name = crn.InnerText,
+                    Url = crn.GetAttribute("href")
                 };
             });
         }
 
+        /// <summary>
+        /// Get a list of CRNs from a subject page
+        /// </summary>
+        /// <param name="subject">Page to scrape</param>
+        /// <returns>An IEnumerable of Detailed Class Pages</returns>
         public IEnumerable<Page> GetCrns(Page subject)
         {
             var html = _client.DownloadString(new Uri(BaseUri, subject.Url));
@@ -223,6 +228,11 @@ namespace TMSNet
 
         }
 
+        /// <summary>
+        /// Get a list of CRNs from a subject page, async.
+        /// </summary>
+        /// <param name="subject">Page to scrape</param>
+        /// <returns>An awaitable task for an IEnumerable of Detailed Class Pages</returns>
         public async Task<IEnumerable<Page>> GetCrnsAsync(Page subject)
         {
             var html = await _client.DownloadStringTaskAsync(new Uri(BaseUri, subject.Url));
@@ -237,24 +247,32 @@ namespace TMSNet
         private ClassDefinition GetDetailedClassFromHtml(string html)
         {
             var sel = (CQ)html;
-            var table = sel["td.tableHeader"].First().Parent("table");
+            var table = sel["td.tableHeader"].First().Parent().Parent().Selection.FirstOrDefault();
 
-            var outter = table.Selection.First().OuterHTML;
+            if (table == null)
+                return null;
 
-            return new ClassDefinition();
+            return ClassDefinition.FromDetailTable(table);
         }
 
+        /// <summary>
+        /// Get detailed class information from a Detailed Class page
+        /// </summary>
+        /// <param name="crn">Detailed Class page to scrape</param>
+        /// <returns>A single ClassDefinition that contains more information than the GetClasses() function.</returns>
         public ClassDefinition GetDetailedClass(Page crn)
         {
             var html = _client.DownloadString(new Uri(BaseUri, crn.Url));
-
             return GetDetailedClassFromHtml(html);
         }
-
+        /// <summary>
+        /// Get detailed class information from a Detailed Class page
+        /// </summary>
+        /// <param name="crn">Detailed Class page to scrape</param>
+        /// <returns>An awaitable Task for a single ClassDefinition that contains more information than the GetClasses() function.</returns>
         public async Task<ClassDefinition> GetDetailedClassAsync(Page crn)
         {
             var html = await _client.DownloadStringTaskAsync(new Uri(BaseUri, crn.Url));
-
             return GetDetailedClassFromHtml(html);
         }
 
